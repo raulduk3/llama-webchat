@@ -1,0 +1,17 @@
+[package]
+name = "llm_web_interface"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tera = "1.19.1"
+reqwest = "0.11.22"
+rocket = "0.5.0"
+rocket_dyn_templates = { version = "0.1.0", features = ["tera"] }
+serde = "1.0.193"
+tokio = "1.34.0"
+serde_json = "1.0.108"
+llm = { version = "0.1.1", features = ["llama"] }
+rand = "0.8.5"

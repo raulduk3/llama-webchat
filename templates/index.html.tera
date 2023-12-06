@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/index.css">
+        <title>LLaMa Chat</title>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Welcome to LLaMa Chat</h1>
+			<ul id="responseList"></ul>
+			<p id="loading" style="display: none;">Loading...</p>
+            <form id="askForm">
+                <input type="text" name="prompt" placeholder="Ask something...">
+                <button type="submit">Send</button>
+            </form>
+        </div>
+        
+        <script>
+            document.getElementById('askForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                // Show loading text
+                document.getElementById('loading').style.display = 'block';
+
+                // Get the user input
+                var prompt = document.getElementsByName('prompt')[0].value;
+
+                // Prepare data for POST request
+                var formData = new FormData();
+                formData.append('prompt', prompt);
+
+                // Make the asynchronous POST request
+                fetch('/ask', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(text => {
+                    // Hide loading text
+                    document.getElementById('loading').style.display = 'none';
+
+                    // Add response to the list
+                    var li = document.createElement('li');
+                    li.textContent = text;
+                    document.getElementById('responseList').appendChild(li);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Hide loading text and possibly display an error message
+                    document.getElementById('loading').style.display = 'none';
+                });
+            });
+        </script>
+    </body>
+</html>
+
